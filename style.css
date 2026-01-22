@@ -1,31 +1,71 @@
-/* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-    height: 100vh;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    box-sizing: border-box;
+/* --- Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap');
+
+/* --- Reset & Core Layout --- */
+* {
+    box-sizing: border-box; /* Ensures padding doesn't add to width */
 }
 
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%; /* Fallback */
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+
+    /* Using Grid for the most reliable centering */
+    display: grid;
+    place-items: center;
+
+    /* Dynamic Viewport Height for mobile browser UI bars */
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    /* Prevents content from hitting the screen edges */
+    padding: 20px;
+}
+
+/* --- The Aesthetic Container --- */
 .container {
     text-align: center;
-    background: white;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    max-width: 600px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Symmetrical padding for perfect internal centering */
+    padding: 40px 30px;
+
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    max-width: 500px;
     width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    /* Gentle entrance animation */
+    animation: fadeIn 0.8s ease-out;
+
+    /* Subtle vertical offset to counteract mobile UI visual weight */
+    margin-bottom: 2dvh;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    color: #ff4d6d;
+    margin: 0 0 30px 0; /* Ensures no extra top margin */
 }
 
-/* Buttons */
+/* --- Buttons Layout --- */
 .buttons {
     display: flex;
     gap: 15px;
@@ -34,27 +74,32 @@ h1 {
     flex-wrap: wrap;
 }
 
+#yesBtnMain, #yesBtnSwap, #noBtn {
+    height: 55px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+#yesBtnMain, #yesBtnSwap {
+    background: #ff4d6d;
+    color: white;
+}
+
 #yesBtnMain {
     width: 45%;
-    min-width: 140px;
-    height: 55px;
-    background-color: #ff4d6d;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: transform 0.3s ease;
+    min-width: 120px;
 }
 
 .swap-wrapper {
     position: relative;
     width: 45%;
     height: 55px;
-    min-width: 140px;
+    min-width: 120px;
 }
 
 .swap-wrapper button {
@@ -63,62 +108,92 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: opacity 0.4s ease, transform 0.3s ease;
 }
 
 #noBtn {
-    background-color: #adb5bd;
-    color: white;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    z-index: 2;
 }
 
 #yesBtnSwap {
-    background-color: #ff4d6d;
-    color: white;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
+    z-index: 1;
 }
 
-/* Hover */
 button:hover {
-    transform: scale(1.05);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
 }
 
-/* Surprise text */
+/* --- GIFs Area (Desktop Side-by-Side) --- */
+.gifs {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.gifs img {
+    width: 48%;
+    max-width: 220px;
+    border-radius: 20px;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.08);
+    object-fit: cover;
+}
+
+/* --- Surprise Text Overlay --- */
 #surpriseText {
     position: fixed;
     inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 4rem;
-    font-weight: bold;
+    display: grid; /* Centers text better than flex */
+    place-items: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 5rem;
     color: #ff4d6d;
-    background-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.5s ease;
     z-index: 1000;
+    transition: opacity 0.4s ease;
 }
 
-.gifs {
-    display: flex;
-    justify-content: center;
-    gap: 20px;       /* space between GIFs */
-    margin-top: 30px;
-    flex-wrap: nowrap; /* keeps them side by side */
-}
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+    body {
+        padding: 15px;
+    }
 
-/* GIFs same size */
-.gifs img {
-    width: 300px;
-    height: 250px;
-    object-fit: cover;
-    border-radius: 12px;
+    .container {
+        padding: 40px 20px;
+        width: 92%; /* Prevents container from touching screen edges */
+        margin-bottom: 5dvh; /* Moves container slightly up to avoid bottom bars */
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #yesBtnMain, .swap-wrapper {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .gifs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gifs img {
+        width: 100%;
+        max-width: 280px;
+    }
 }
